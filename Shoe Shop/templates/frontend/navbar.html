@@ -1,0 +1,49 @@
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#kumpulan">
+      <span class="fa fa-bars text-black"></span>
+    </button>
+
+    <div class="collapse navbar-collapse text-light" id="kumpulan">
+      <a href="index.html">
+        <span class="text-black logo-text">SHOE SHOP</span>
+      </a>
+      <!-- <img src="../../static/uploads/mighty-logo.jpeg" width="200" style="margin-top: 10px; margin-bottom: 10px;"> -->
+
+      <ul class="navbar-nav mx-auto">
+        <!-- Menu -->
+        <li class="nav-item" style="margin-right: 15px;">
+          <a href="#shoe_section" class="nav-link">Shoes</a>
+        </li>
+        <li class="nav-item">
+          <a href="/order/{{session['id_customer']}}" class="nav-link">Order Status</a>
+        </li>
+      </ul>
+
+      <div class="d-flex m-3 me-0">
+        <!-- <button type="button"
+          class="btn btn-search me-4">
+          <i class="fas fa-search"></i>
+        </button> -->
+        <a href="/cart/{{session['id_customer']}}" class="position-relative me-4 my-auto">
+          <i class="fa fa-shopping-bag"></i>
+          <!-- <span
+            class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center bg-warning text-dark px-1"
+            style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
+            4
+          </span> -->
+        </a>
+        {% if session.login %}
+        <a href="/logout" class="my-auto"><span class="text-white" style="font-family: Poppins;">Logout</span></a>
+        {% else %}
+        <a href="/login" class="my-auto">
+          <i class="fas fa-user"></i>
+        </a>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</nav>
+<!-- NAVBAR END -->

@@ -1,0 +1,30 @@
+{% include 'layout/header.html' %}
+{% include 'layout/sidebar.html' %}
+
+<div class="main-content">
+  <section class="section">
+    <div class="section-header">
+      <h1>Add Category</h1>
+    </div>
+
+    <div class="section-body">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+          <form method="POST" action="">
+            <div class="card-body">
+              <div class="form-group">
+                <label>Category Name</label>
+                <input type="text" name="form_name" required="">
+              </div>
+              <div class="card-footer text-left">
+                <input type="submit" value="Sumbit" class="btn btn-primary">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% include 'layout/footer.html' %}

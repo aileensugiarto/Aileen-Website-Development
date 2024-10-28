@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='frontend/asset/bootstrap/bootstrap.min.css') }}">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='frontend/lib/owlcarousel/assets/owl.carousel.min.css') }}">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='frontend/style.css') }}">
+</head>
+
+<body>
+  <!-- Navbar -->
+  {% include 'frontend/navbar.html' %}
+
+  <div class="container-fluid py-5">
+    <div class="container py-5">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Products</th>
+              <th scope="col">Name</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {% for row in data_cart %}
+              <td scope="row">
+                <div class="d-flex align-items-center">
+                  <img src="{{url_for('static', filename='uploads/' + row[8])}}" class="img-fluid me-5 rounded-circle"
+                    style="width: 180px; height: 200px;" alt="">
+                </div>
+              </td>
+              <td>
+                <p class="mb-0 mt-4">{{row[4]}}</p>
+              </td>
+              <td>
+                <p class="mb-0 mt-4">{{row[5]}}</p>
+              </td>
+              <td>
+                <div class="input-group mt-4 quantity" style="width: 100px;">
+                  <form method="POST" action="/update_cart">
+                    <input type="hidden" name="form_id_cart" value="{{row[0]}}">
+                    <input type="hidden" name="form_id_product" value="{{row[2]}}">
+                    <input type="hidden" name="form_price" value="{{row[5]}}">
+                    <input type="hidden" name="form_qty" value="{{row[1]}}">
+                    <input type="hidden" name="form_id_customer" value="{{session['id_customer']}}">
+                    <!-- Minus Button -->
+                    <div class="input-group-btn">
+                      <button type="submit" name="minus" class="btn btn-sm bg-light border">
+                        <i class="fa fa-minus"></i>
+                      </button>
+                    </div>
+
+                    <!-- Quantity -->
+                    <input type="text" class="form-control form-control-sm text-center border-0" value="{{row[1]}}"
+                      disabled>
+
+                    <!-- Add Button -->
+                    <div class="input-group-btn">
+                      <button type="submit" name="plus" class="btn btn-sm bg-light border">
+                        <i class="fa fa-plus"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </td>
+              <td>
+                <!-- Delete Cart -->
+                <a href="/delete_cart/{{row[0]}}" class="btn btn-md rounded-circle bg-light border mt-4">
+                  <i class="fa fa-times text-danger"></i>
+                </a>
+              </td>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="row g-4 justify-content-end mt-5">
+        <div class="col-8"></div>
+        <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
+          <div class="rounded p-4" style="background-color: #F9F9F9; width: 100%;">
+            <div class="">
+              <h3 class=" mb-4" style="font-family: Poppins; color: black;">Order Summary</h3>
+            </div>
+            <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+              <h5 class="mb-0 ps-4" style="font-family: Poppins;">Total</h5>
+              <p class="mb-0 pe-4" style="color: black;">{{total_price}}</p>
+            </div>
+
+            <a href="/checkout/{{session.id_customer}}"
+              class="btn px-5 py-2 mb-2 rounded-pill w-100" style="color: #F9F9F9; background-color: black; font-size: 14px;">
+              Checkout
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

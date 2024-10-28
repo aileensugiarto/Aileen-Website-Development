@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='frontend/asset/bootstrap/bootstrap.min.css') }}">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='frontend/lib/owlcarousel/assets/owl.carousel.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='frontend/style.css') }}">
+</head>
+
+<body>
+  <!-- Navbar -->
+  {% include 'frontend/navbar.html' %}
+
+  <div class="container-fluid py-5">
+    <div class="container py-5">
+      <h1 class="mb-4" style="font-family: Poppins; color: black;">Billing Details</h1>
+      <form action="/process_checkout" method="POST">
+        <div class="row g-5">
+          <div class="col-md-12 col-lg-6 col-xl-6">
+            <div class="row">
+              <input type="hidden" name="form_id_customer" value="{{session['id_customer']}}">
+              <input type="hidden" name="form_total_price" value="{{total_price}}">
+              <div class="form-item">
+                <select id="province" name="province" class="form-control" required>
+                  <option value="">Select Province</option>
+                  {% for province in provinces %}
+                  <option value="{{province['province_id']}}">{{province['province']}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-item mt-3">
+                <select id="city" name="city" class="form-control" required>
+                  <option value="">Select City</option>
+                </select>
+              </div>
+              <div class="form-item mt-3">
+                <textarea name="form_information" class="form-control" spellcheck="false" cols="30" rows="11" required
+                  placeholder="Order Notes"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-6 col-xl-6">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Products</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in data_cart %}
+                  <input type="hidden" name="form_id_cart[]" value="{{row[0]}}">
+                  <input type="hidden" name="form_id_product[]" value="{{row[2]}}">
+                  <input type="hidden" name="form_price[]" value="{{row[5]}}">
+                  <input type="hidden" name="form_qty[]" value="{{row[1]}}">
+                  <tr>
+                    <td scope="row">
+                      <div class="d-flex align-items-center mt-2">
+                        <img src="{{url_for('static', filename='uploads/' + row[8])}}" class="img-fluid rounded-circle"
+                          style="width: 130px; height: 150px;">
+                      </div>
+                    </td>
+                    <td class="py-5">{{row[4]}}</td>
+                    <td class="py-5">{{row[5]}}</td>
+                    <td class="py-5">{{row[1]}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+
+            <div class="form-item mt-3">
+              <label>Total Price</label>
+              <input type="text" class="form-control" value="{{total_price}}" readonly>
+            </div>
+
+            <div class="form-item mt-3">
+              <label>Select Courier</label>
+              <select id="courier" name="courier" class="form-control" required>
+                <option value="jne">JNE</option>
+                <option value="pos">POS</option>
+                <option value="tiki">TIKI</option>
+              </select>
+            </div>
+
+            <div class="form-item mt-3">
+              <button type="button" id="calculate_shipping" class="btn py-2 w-100 rounded-pill"
+                style="background-color: black; color: white; font-size: 14px;">
+                Calculate Shipping
+              </button>
+            </div>
+
+            <div class="form-item mt-3">
+              <label>Shipping Cost</label>
+              <input type="text" name="shipping_cost" id="shipping_cost" class="form-control" readonly>
+            </div>
+
+            <div class="form-item mt-3">
+              <label for="final_total_price_display">Final Total Price</label>
+              <input type="text" name="final_total_price_display" id="final_total_price_display" class="form-control"
+                value="{{total_price}}" readonly>
+            </div>
+
+            <input type="hidden" name="final_total_price" id="final_total_price" value="{{total_price}}">
+
+            <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+              <input type="submit" value="Place Order" class="btn py-2 w-100 rounded-pill"
+                style="background-color: black; color: white; font-size: 14px;">
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='frontend/asset/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='frontend/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+
+  <script>
+    // Fetch cities when a province is selected
+    document.getElementById("province").addEventListener("change", function () {
+      var province_id = this.value;
+      fetch("/get_cities/" + province_id)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not OK");
+          }
+          return response.json();
+        })
+        .then(data => {
+          var citySelect = document.getElementById("city");
+          citySelect.innerHTML = '<option value="">Select City</option>';
+          data.forEach(function (city) {
+            var option = document.createElement("option");
+            option.value = city.city_id;
+            option.text = city.city_name;
+            citySelect.appendChild(option);
+          });
+        })
+        .catch(error => console.error("Error fetching cities: ", error));
+    });
+
+    // Calculate shipping cost
+    // Calculate shipping cost
+    document.getElementById("calculate_shipping").addEventListener("click", function () {
+      var origin = "{{ORIGIN_CITY_ID}}";
+      var destination = document.getElementById("city").value;
+      var weight = 1000; // Example weight (grams)
+      var courier = document.getElementById("courier").value;
+      var totalPrice = parseFloat(document.getElementById("final_total_price").value);
+
+      if (!destination) {
+        alert("Please select a city.");
+        return;
+      }
+
+      fetch("/get_shipping_cost", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: new URLSearchParams({
+            "origin": origin,
+            "destination": destination,
+            "weight": weight,
+            "courier": courier
+          })
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not OK");
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log(data);
+          if (data.length > 0 && data[0].costs.length > 0) {
+            var cost = data[0].costs[0].cost[0].value;
+
+            document.getElementById("shipping_cost").value = cost;
+
+            var finalTotal = totalPrice + cost;
+            document.getElementById("final_total_price_display").value = finalTotal
+          } else {
+            document.getElementById("shipping_cost").value = "Not Available";
+            alert("Shipping cost not available for the selected city/courier.");
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching shipping cost: ", error);
+          alert("There was an error calculating the shipping cost. Please try again later.");
+        });
+    });
+  </script>
+</body>
+
+</html>

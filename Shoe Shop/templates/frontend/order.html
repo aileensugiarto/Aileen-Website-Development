@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Status</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='frontend/asset/bootstrap/bootstrap.min.css') }}">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='frontend/lib/owlcarousel/assets/owl.carousel.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='frontend/style.css') }}">
+
+  <script type="text/javascript"
+      src="https://app.sandbox.midtrans.com/snap/snap.js"
+      data-client-key="SB-Mid-client-LL2rEblyeJMYdTz4"></script>
+
+  <style>
+    /* Default active (Billing) tab */
+    .nav-pills .nav-link.active {
+      background-color: black !important;
+      /* Active tab background black */
+      color: white !important;
+      /* Ensure text is white */
+    }
+
+    /* Styling other tabs when not active */
+    .nav-pills .nav-link {
+      background-color: lightgray;
+      /* Light gray background for inactive tabs */
+      color: black;
+      /* Inactive tab text color */
+    }
+
+    /* Optional hover effect for inactive tabs */
+    .nav-pills .nav-link:hover {
+      background-color: gray;
+      color: white;
+      text-decoration: none;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const tabs = document.querySelectorAll('.nav-link');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function () {
+          // Remove active class from all tabs
+          tabs.forEach(t => t.classList.remove('active'));
+
+          // Add active class to the clicked tab
+          this.classList.add('active');
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <!-- Navbar -->
+  {% include 'frontend/navbar.html' %}
+
+  <div class="container-fluid py-5">
+    <div class="container py-5">
+      <h1 class="mb-4" style="font-family: Poppins; color: black;">Order Status</h1>
+      <div class="row g-5">
+        <div class="col-md-12 col-lg-12 col-xl-12">
+          <div class="row">
+            <ul class="nav nav-pills d-inline-flex text-center mb-5">
+              <li class="nav-item" style="margin-bottom: 15px;">
+                <a class="d-flex m-2 py-2 rounded-pill nav-link active" data-bs-toggle="pill" href="#billing-tab"
+                  role="tab" aria-controls="billing" aria-selected="true">
+                  <span class="billing-tab" style="width: 130px;">Billing</span>
+                </a>
+              </li>
+
+              <li class="nav-item" style="margin-bottom: 15px;">
+                <a class="d-flex m-2 py-2 rounded-pill nav-link" data-bs-toggle="pill" href="#packaging-tab" role="tab"
+                  aria-controls="packaging" aria-selected="false">
+                  <span class="billing-tab" style="width: 130px;">Packaging</span>
+                </a>
+              </li>
+
+              <li class="nav-item" style="margin-bottom: 15px;">
+                <a class="d-flex m-2 py-2 rounded-pill nav-link" data-bs-toggle="pill" href="#delivery-tab" role="tab"
+                  aria-controls="packaging" aria-selected="false">
+                  <span class="billing-tab" style="width: 130px;">Delivery</span>
+                </a>
+              </li>
+
+              <li class="nav-item" style="margin-bottom: 15px;">
+                <a class="d-flex m-2 py-2 rounded-pill nav-link" data-bs-toggle="pill" href="#sent-tab" role="tab"
+                  aria-controls="packaging" aria-selected="false">
+                  <span class="billing-tab" style="width: 130px;">Sent</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="tab-content">
+
+            <!-- Billing Tab -->
+            <div id="billing-tab" class="tab-pane fade show p-0 active" role="tab" aria-controls="billing"
+              aria-selected="true">
+              <div class="row g-4">
+                <div class="col-lg-12">
+                  <div class="row g-4">
+                    <h2 style="font-family: Poppins; color: black;">Billing</h2>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Information</th>
+                            <th scope="col">Transaction Date</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Upload Payment Proof</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for row in data_transaction_billing %}
+                          <tr>
+                            <td class="py-5">{{row[0]}}</td>
+                            <td class="py-5">{{row[1]}}</td>
+                            <td class="py-5">{{row[2]}}</td>
+                            <td class="py-5">{{row[3]}}</td>
+                            <td class="py-5">
+                              <form id="payment-form" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="form_id_transaction" value="{{row[4]}}">
+                                <input type="hidden" name="form_total_price" value="{{row[2]}}">
+                                <button id="pay-button" type="button" class="btn rounded-pill w-50" style="background-color: black; color: white;">Pay</button>
+                              </form>
+                            </td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Packaging Tab -->
+            <div id="packaging-tab" class="tab-pane fade show p-0">
+              <div class="row g-4">
+                <div class="col-lg-12">
+                  <div class="row g-4">
+                    <h2 style="font-family: Poppins; color: black;">Packaging</h2>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Information</th>
+                            <th scope="col">Transaction Date</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for row in data_transaction_packaging %}
+                          <tr>
+                            <td class="py-5">{{row[0]}}</td>
+                            <td class="py-5">{{row[1]}}</td>
+                            <td class="py-5">{{row[2]}}</td>
+                            <td class="py-5">{{row[3]}}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Delivery Tab -->
+            <div id="delivery-tab" class="tab-pane fade show p-0">
+              <div class="row g-4">
+                <div class="col-lg-12">
+                  <div class="row g-4">
+                    <h2 style="font-family: Poppins; color: black;">Delivery</h2>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Information</th>
+                            <th scope="col">Transaction Date</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Status</th>
+                            <td scope="col"></td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for row in data_transaction_delivery %}
+                          <tr>
+                            <td class="py-5">{{row[0]}}</td>
+                            <td class="py-5">{{row[1]}}</td>
+                            <td class="py-5">{{row[2]}}</td>
+                            <td class="py-5">{{row[3]}}</td>
+                            <td class="py-5">
+                              <form action="/sent" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="form_id_transaction" value="{{row[4]}}">
+                                <input type="submit" value="Sent" class="btn w-50" style="background-color: black; color: white;">
+                              </form>
+                            </td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sent Tab -->
+            <div id="sent-tab" class="tab-pane fade show p-0">
+              <div class="row g-4">
+                <div class="col-lg-12">
+                  <div class="row g-4">
+                    <h2 style="font-family: Poppins; color: black;">Sent</h2>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Information</th>
+                            <th scope="col">Transaction Date</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for row in data_transaction_sent %}
+                          <tr>
+                            <td class="py-5">{{row[0]}}</td>
+                            <td class="py-5">{{row[1]}}</td>
+                            <td class="py-5">{{row[2]}}</td>
+                            <td class="py-5">{{row[3]}}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='frontend/asset/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='frontend/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+
+  <script>
+    document.getElementById('pay-button').onclick = function() {
+      var form = document.getElementById('payment-form');
+      var formData = new FormData(form);
+
+      fetch('/billing', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          console.error('Error:', data.error);
+          alert('Payment failed:' + data.error);
+          return;
+        }
+        snap.pay(data.token, {
+          onSuccess: function (result) {
+            alert("Payment Successful");
+            console.log(result);
+            fetch('/save_payment_info', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                transaction_id: data.transaction_id,
+                total_price: data.total_price,
+              })
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.error) {
+                console.error('Error', data.error);
+              } else {
+                console.log('Payment info saved successfully');
+                window.location.reload();
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            })
+          },
+          onPending: function(result) {
+            alert("Waiting for your payment")
+            console.log(result);
+          },
+          onError: function(result) {
+            alert("Payment Failed")
+            console.log(result);
+          },
+          onClose: function(result) {
+            alert("You closed the popup without finishing the payment")
+            console.log(result);
+          }
+        });
+      })
+      .catch(error => {
+        console.error('Error', error);
+      })
+    }
+  </script>
+</body>
+
+</html>

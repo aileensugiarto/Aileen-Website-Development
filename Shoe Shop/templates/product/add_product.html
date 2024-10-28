@@ -1,0 +1,67 @@
+{% include 'layout/header.html' %}
+
+{% include 'layout/sidebar.html' %}
+
+<!-- Ini untuk Content -->
+<div class="main-content">
+  <section class="section">
+    <div class="section-header">
+      <h1>Add Data Product</h1>
+    </div>
+
+    <div class="section-body">
+
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+          <div class="card">
+            <!-- enctype: Untuk upload file -->
+            <form method="POST" action="" enctype="multipart/form-data">
+              <div class="card-body">
+                <div class="form-group">
+                  <label>Product Name</label>
+                  <input type="text" class="form-control" name="form_product_name" required="">
+                </div>
+
+                <div class="form-group">
+                  <label>Category Name</label>
+                  <select name="form_id_category" class="form-control">
+                    {% for row in category %}
+                    <option value="{{row[0]}}">{{ row[1] }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Price</label>
+                  <input type="text" class="form-control" name="form_price" required="">
+                </div>
+
+                <div class="form-group">
+                  <label>Description</label>
+                  <input type="text" class="form-control" name="form_description">
+                </div>
+
+                <div class="form-group">
+                  <label>Product Stock</label>
+                  <input type="text" class="form-control" name="form_product_stock" required="">
+                </div>
+
+                <div class="form-group">
+                  <label>Upload Image</label>
+                  <input type="file" name="form_image" id="" class="form-control">
+                </div>
+
+              <div class="card-footer text-left">
+                <input type="submit" value="Submit" class="btn btn-primary"></input>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div>
+<!-- Ini untuk Tutup Content -->
+
+{% include 'layout/footer.html' %}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='frontend/asset/bootstrap/bootstrap.min.css') }}">
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='frontend/lib/owlcarousel/assets/owl.carousel.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='frontend/style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body style="background-color: #F3F3F4;">
+
+  {% include 'frontend/navbar.html' %}
+
+  <section class="login-section">
+    <div class="container-fluid contact">
+      <div class="container">
+        <div class="p-5 rounded login-form">
+          <div class="row g-4">
+            <div class="col-12">
+              <div class="text-center mx-auto" style="max-width: 700px;">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{category}} alert-dismissible show fade">
+                  <div class="alert-body">
+                    {{message}}
+                  </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <h1 class="login-title">Login</h1>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <form method="POST" action="/login" class="">
+                <div class="text-center mx-auto" style="max-width: 700px;">
+                  <input type="text" name="form_username" class="w-100 form-control border-1 py-2 mb-4 rounded-0"
+                    placeholder="Enter Username" required>
+
+                  <input type="password" name="form_password" class="w-100 form-control border-1 py-2 mb-4 rounded-0"
+                    placeholder="Enter Password" required>
+
+                  <button class="submit-btn" type="submit"
+                    required>Login</button>
+
+                    <span class="w-100">Don't have an account? <a href="/register" style="color: #0D6FFD;">Register here</a></span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <footer class="footer" style="background-color: #1B1C1D;">
+    <div class="container text-center py-3">
+      <p class="mb-0 text-white">© 2024 Shoe Shop. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='frontend/asset/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='frontend/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+
+  <script>
+    (function ($) {
+      "use strict";
+      $(".testimonial-carousel").owlCarousel({
+        autoplay: true,
+        smartSpeed: 2000,
+        center: false,
+        dots: true,
+        loop: true,
+        margin: 25,
+        nav: true,
+        navText: [
+          '<i class="fas fa-arrow-left"></i>',
+          '<i class="fas fa-arrow-right"></i>'
+        ],
+        responsiveClass: true,
+        responsive: {
+          0: {
+            items: 1
+          },
+          576: {
+            items: 1
+          },
+          768: {
+            items: 1
+          },
+          992: {
+            items: 2
+          },
+          1200: {
+            items: 2
+          }
+        }
+      });
+
+
+    })(jQuery);
+  </script>
+
+
+</body>
+
+</html>

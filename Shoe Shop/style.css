@@ -1,0 +1,300 @@
+/* NAVBAR */
+.navbar .nav-link {
+  margin-right: 15px;
+  color: white;
+  font-family: 'Poppins';
+  font-size: 14px;
+}
+.navbar {
+  background-color: black;
+}
+/* NAVBAR */
+
+
+/* BANNER */
+.banner {
+  position: relative;
+  width: 100%;
+}
+
+.banner img {
+  width: 100%;
+  height: auto;
+}
+
+.banner-text .text1,
+.banner-text .text2,
+.banner-text .banner-btn {
+  position: absolute;
+  left: 100px;
+  transform: translateY(-50%);
+  text-align: left;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.banner-text .text1 {
+  font-family: 'Poppins';
+  font-weight: 700;
+  font-size: 45px;
+  top: 43%;
+}
+
+.banner-text .text2 {
+  font-family: 'Poppins';
+  font-weight: 500;
+  font-size: 20px;
+  top: 52%;
+  background-color: black;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.banner-text .banner-btn {
+  font-family: 'Poppins';
+  top: 60%;
+  border: none;
+  padding: 10px 50px;
+  border-radius: 0px;
+  background-color: #2e404c;
+  color: white;
+  transition: 0.3s;
+}
+
+.banner .banner-btn:hover {
+  background-color: black;
+  color: white;
+  /* border: 1px solid #2e404c; */
+}
+
+.banner-text span {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+}
+
+@media (max-width: 1200px) {
+  .banner-text .text1 {
+    font-size: 35px;
+  }
+  .banner-text .text2 {
+    font-size: 18px;
+  }
+  .banner-text .banner-btn {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  .banner-text .text1 {
+    font-size: 30px;
+  }
+  .banner-text .text2 {
+    font-size: 16px;
+  }
+  .banner-text .banner-btn {
+    font-size: 12px;
+  }
+  .banner-text .text1,
+  .banner-text .text2,
+  .banner-text .banner-btn {
+    left: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-text .text1 {
+    font-size: 25px;
+  }
+  .banner-text .text2 {
+    font-size: 14px;
+  }
+  .banner-text .banner-btn {
+    font-size: 12px;
+  }
+  .banner-text .text1,
+  .banner-text .text2,
+  .banner-text .banner-btn {
+    left: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .banner-text .text1 {
+    font-size: 20px;
+  }
+  .banner-text .text2 {
+    font-size: 12px;
+  }
+  .banner-text .banner-btn {
+    font-size: 8px;
+  }
+  .banner-text .text1,
+  .banner-text .text2,
+  .banner-text .banner-btn {
+    left: 20px;
+  }
+}
+/* BANNER END */
+
+
+.shop-btn {
+  border: none;
+  background-color: #3A3A3A;
+  color: white;
+  font-family: 'Poppins';
+  padding: 7px 20px;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.shop-btn:hover {
+  background-color: #555555;
+}
+
+
+/* SHOES */
+/* .shoe-box {
+  margin-bottom: 30px;
+}
+.shoe-img {
+  background-color: #FAFAFA;
+}
+
+.shoe-name {
+  font-family: 'Poppins';
+  font-weight: 600;
+  color: black;
+  text-decoration: none;
+}
+.shoe-name:hover {
+  text-decoration: underline;
+}
+
+.shoe-price {
+  font-family: 'Poppins';
+} */
+
+.shoe-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  text-align: center; /* Center the text */
+  height: 100%; /* Make sure the shoe-box takes full height */
+}
+
+.shoe-img {
+  max-width: 100%;
+  height: auto;
+  margin: auto; /* Ensure the image is centered */
+}
+
+.shoe-name {
+  font-family: 'Poppins';
+  font-weight: 600;
+  color: black;
+  text-decoration: none;
+}
+
+.shoe-name:hover {
+  text-decoration: underline;
+}
+
+.shoe-price {
+  font-family: 'Poppins';
+}
+/* SHOES END */
+
+
+/* SLICK SLIDER */
+.slick-prev,
+.slick-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: black;
+  color: white;
+  border: none;
+  padding: 10px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+/* .slick-prev {
+  left: 10px;
+}
+
+.slick-next {
+  right: 10px;
+} */
+
+.slick-prev i,
+.slick-next i {
+  color: white;
+  font-size: 16px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  content: '';
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  background-color: black;
+}
+.slick-prev:active,
+.slick-next:active {
+  background-color: black;
+}
+/* SLICK SLIDER */
+
+
+/* IMG CARD */
+.img-card {
+  position: relative;
+}
+
+.img-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+}
+.img-text .text1 {
+  display: block;
+  font-family: 'Poppins';
+  font-size: 35px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+.img-text .text2 {
+  display: block;
+  font-family: 'Poppins';
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+.img-text .view-more-btn {
+  border: none;
+  font-size: 16px;
+  background-color: black;
+  color: white;
+  padding: 10px 50px;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+.img-text .view-more-btn:hover {
+  background-color: white;
+  color: black;
+}

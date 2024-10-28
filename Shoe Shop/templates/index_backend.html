@@ -1,0 +1,77 @@
+{% include 'layout/header.html' %}
+{% include 'layout/sidebar.html' %}
+
+<div class="main-content">
+  <section class="section">
+    <div class="section-header">
+      <h1>Dashboard</h1>
+    </div>
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card card-statistic-1">
+          <div class="card-icon bg-primary">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="card-wrap">
+            <div class="card-header">
+              <h4>Total Customer</h4>
+            </div>
+            <div class="card-body">
+              {{total_customer}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card card-statistic-1">
+          <div class="card-icon bg-danger">
+            <i class="fas fa-shopping-bag"></i>
+          </div>
+          <div class="card-wrap">
+            <div class="card-header">
+              <h4>Total Products</h4>
+            </div>
+            <div class="card-body">
+              {{total_product}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card card-statistic-1">
+          <div class="card-icon bg-warning">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="card-wrap">
+            <div class="card-header">
+              <h4>Total Transaction</h4>
+            </div>
+            <div class="card-body">
+              {{total_transaction}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card card-statistic-1">
+          <div class="card-icon bg-success">
+            <i class="fas fa-money-bill"></i>
+          </div>
+          <div class="card-wrap">
+            <div class="card-header">
+              <h4>Total Payment</h4>
+            </div>
+            <div class="card-body">
+              {{total_payment}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% include 'layout/footer.html' %}
